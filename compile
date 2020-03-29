@@ -4,6 +4,8 @@ files_in_order="
 src/lib.lua
 src/att.lua
 
+src/demo.lua
+
 src/draw.lua
 src/misc.lua
 src/move_funcs.lua
@@ -12,7 +14,6 @@ src/view.lua
 
 src/acts.lua
 src/parents.lua
-src/demo.lua
 "
 
 ./pico_minifier -d $files_in_order > _compiled_dev.lua

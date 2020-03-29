@@ -1,22 +1,15 @@
--- lib. make sure this is included first.
+-- 0 = nothing
+-- 1 = held
+-- 2 = pressed
+-- 4 = released
 
--- Globals - a table with every global variable in the program.
-_g = {}
-
--- util functions:
--- 7661 -> 7650
 function nf() end
-function btn_helper(f, a, b)
-   return f(a) and f(b) and 0 or f(a) and 0xffff or f(b) and 1 or 0
-end
 
 function bool_to_num(condition) return condition and 0xffff or 1 end
 
-function xbtn() return btn_helper(btn, 0, 1) end
-function ybtn() return btn_helper(btn, 2, 3) end
-
-function xbtnp() return btn_helper(btnp, 0, 1) end
-function ybtnp() return btn_helper(btnp, 2, 3) end
+function btn_helper(a, b)
+   return a and b and 0 or a and 0xffff or b and 1 or 0
+end
 
 function zsgn(num) return num == 0 and 0 or sgn(num) end
 function round(num) return flr(num + .5) end
@@ -205,7 +198,7 @@ function tl_node(root, node, ...)
    end
 
    if node != root or #node == 0 then
-      node.tl_tim += 1/60
+      node.tl_tim += 1/FPS
       root.tl_tim = node.tl_tim
 
       -- Return the update return code, or true if we are out of time.

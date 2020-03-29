@@ -1,6 +1,7 @@
 _g = gun_vals[[
    scr_fade=0,
    debug=false,
+   btns={}
 ]]
 
 function _init()
@@ -25,13 +26,15 @@ function _draw()
    call_not_nil(g_tl, 'd', g_tl)
    fade'0'
 
-   if _g.mike then
-      print("y: ".._g.mike.y, 0, 0, 7)
+   if _g.debug and _g.mike then
+      print("0: "..(_g.mike:btn(0) or "nil"), 0, 0, 7)
+      print("1: "..(_g.mike:btn(1) or "nil"), 64, 0, 7)
    end
 end
 
 function game_update()
    batch_call(acts_loop, [[
+      {'inputable','update_btns'},
       {'act','update'},
       {'mov','move'},
       {'col','move_check',@1},
@@ -55,11 +58,10 @@ function game_draw()
          1
       )
    end
-   scr_rectfill(-8,0,8,16,3)
+   scr_rectfill(-8,-4/8,8,16,3)
 
    acts_loop('drawable', 'd')
-   -- :w
-   -- _g.mike:d()
+   if _g.debug then acts_loop('dim', 'debug_rect') end
 end
 
 function game_init()

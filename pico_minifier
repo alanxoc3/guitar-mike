@@ -12,6 +12,7 @@ GetOptions('dev' => \$dev_mode) or die "Usage: $0 [--dev]\n";
 my %constants;
 
 # Colors
+$constants{'FPS'} = '60';
 $constants{'CART_NAME'} = '"guitar-mike"';
 $constants{'FADE_TIME'} = '1';
 

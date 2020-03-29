@@ -331,16 +331,54 @@ create_parent(
 end)
 
 create_parent(
-[[ 'grounded', {'act'}, {'keep_above_ground'},
+[[ 'grounded', {'dim'}, {'keep_above_ground'},
    {
       keep_above_ground=@1,
       is_touching_ground=@2
    }
 ]], function(a)
    if a:is_touching_ground() then
-      a.y = 0
+      a.y = -a.ry
       a.ay = 0
    end
 end, function(a)
-   return a.y >= 0
+   return a.y >= -a.ry
 end)
+
+create_parent(
+[[ 'inputable', {'act'}, {},
+   {
+      btns={},
+      update_btns=@1,
+      btnp=@2,
+      btnr=@3,
+      btn=@4,
+      xbtn=@5,
+      ybtn=@6,
+   }
+]], function(a)
+   for i=0,5 do
+      local state = a.btns[i]
+
+      if btn(i) then
+         if state then
+            state = state + 1/FPS
+         else
+            state = 0
+         end
+      else
+         if state then
+            state = false
+         else
+            state = nil
+         end
+      end
+
+      a.btns[i] = state
+   end
+end, function(a,b) return a.btns[b] == 0 end,
+function(a,b) return a.btns[b] == false end,
+function(a,b) return a.btns[b] end,
+function(a) return btn_helper(a:btn(0), a:btn(1)) end,
+function(a) return btn_helper(a:btn(2), a:btn(3)) end
+)

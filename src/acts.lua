@@ -1,27 +1,55 @@
 create_actor([['mike', 2,
-   {'mov','drawable','spr','spr_obj','grounded'}
+   {'dim','inputable','mov','drawable','spr','spr_obj','grounded'}
 ]], [[
-   iyy=-11,
+   jump_percent = 0,
+   rx=.625,
+   ry=1,
+   iyy=-8,
    x=@1, y=@2,
    sind=192, sw=2, sh=4,
+   jump_sinds={194,196,198,200},
    u=@3
 ]], function(a)
+   if a:xbtn() > 0 then
+      a.xf = false
+   elseif a:xbtn() < 0 then
+      a.xf = true
+   end
+
    if not a:is_touching_ground() then
-      a.ax=xbtn()*.05
+      a.ax=a:xbtn()*.05
    else
       a.ax = 0
    end
 
-   if a:is_touching_ground() and btn(4) then
-      a.dy -= 1.2
+   if a:is_touching_ground() and a:btnr(4) then
+      a.dy -= a.jump_percent * 1.5
       a.ix = .85
+      a.sind = 202
    else
       a.ay += .005
       a.ix = .75
    end
 
-end
-)
+   if a:is_touching_ground() and a:btn(4) then
+      a.jump_percent = min(a.jump_percent + .05, 1)
+      a.sind = a.jump_sinds[min(1+flr(a.jump_percent*4), 4)]
+   else
+      a.jump_percent = 0
+   end
+
+   if a:is_touching_ground() and not a:btn(4) then
+      a.sind = 192
+   end
+
+   if not a:is_touching_ground() then
+      if abs(a.dy) > .3 then
+         a.sind = 204
+      else
+         a.sind = 206
+      end
+   end
+end)
 
 create_actor([['view', 4,
    {'act','confined'},
@@ -49,4 +77,3 @@ end, function(a, ma)
    a.follow_act = ma
    a.tl_next = ma and ma.timeoutable and 2 or 1
 end)
-
