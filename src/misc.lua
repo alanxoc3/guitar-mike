@@ -27,7 +27,7 @@ g_logo = gun_vals([[
    _g.scr_fade = 8+cos(logo.tl_tim/logo.tl_max_time)*4-4
 
    camera(_g.scr_fade > 1 and rnd_one())
-   zspr(160, logo.x, logo.y, 4, 2)
+   zspr(76, logo.x, logo.y, 4, 2)
    camera()
 end
 )

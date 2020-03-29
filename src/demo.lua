@@ -68,4 +68,5 @@ function game_init()
    _g.mike = g_att.mike(0,0)
    g_view = g_att.view(2.75, 3, 0, _g.mike)
    g_view.off_y=5
+   sfx(2)
 end

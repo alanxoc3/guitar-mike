@@ -8,7 +8,10 @@ create_actor([['mike', 2,
    x=@1, y=@2,
    sind=192, sw=2, sh=4,
    jump_sinds={194,196,198,200},
-   u=@3
+   play_sinds={128,130,132,134,136,138,140,142,140,138,136,134,132,130,128},
+   tl_loop=true,
+   {i=@6,u=@3},
+   {i=@5, u=@4, tl_max_time=3}
 ]], function(a)
    if a:xbtn() > 0 then
       a.xf = false
@@ -49,7 +52,16 @@ create_actor([['mike', 2,
          a.sind = 206
       end
    end
-end)
+
+   if a:is_touching_ground() and not a:btn(4) and a:btnp(5) then
+      a.tl_next = true
+   end
+end, function(a)
+   local percent = a.tl_tim / a.tl_max_time
+   a.sind = a.play_sinds[1+flr(percent*14)]
+end, function(a)
+   music(1)
+end, nf)
 
 create_actor([['view', 4,
    {'act','confined'},
