@@ -1,0 +1,41 @@
+# Characters
+Lank - Main character
+Ivan - Evil fairy.
+
+Navy - Older brother of Lime, first boss.
+Lime - Younger sister of Navy, gives you the sword.
+
+Bob - Husband of Bobette.
+Jane - Bob's wife.
+
+Novi - Lank's previous fairy.
+Barry - The banjo teacher.
+Grover - The gravedigger.
+Teach - The teacher.
+
+Keep - The shopkeeper.
+Lark - Mayor of town.
+
+Cannon - The king. Zeldo's husband.
+Zeldo  - The queen. Cannon's wife.
+
+# Enemies
+Batty - Everywhere.
+Slimy - Everywhere.
+Skelly - Graveyard.
+Planty - Forest.
+Handy - Crypt.
+Topy - Canyon.
+Mowy - Field.
+Knighty - Castle.
+Zomby - Hard mode (village).
+
+# Boss
+Cannon
+Navy
+Ivan
+Kluck
+
+# Special Enemy/Mini-boss
+Shadow Lank
+Ghost

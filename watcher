@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# pico watch, by Alan Morgan
+
+inotifywait -e close_write,moved_to,create -mr ./src |
+while read -r directory; do
+  echo "'$directory' was changed."
+  ./compile
+done
