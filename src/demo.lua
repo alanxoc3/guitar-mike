@@ -37,9 +37,7 @@ function game_update()
       {'inputable','update_btns'},
       {'act','update'},
       {'mov','move'},
-      {'col','move_check',@1},
-      {'col','move_check',@4},
-      {'trig','trigger_update',@3},
+      {'tcol','coll_tile',@1},
       {'rel','rel_update'},
       {'vec','vec_update'},
       {'bounded','check_bounds'},
@@ -47,26 +45,25 @@ function game_update()
       {'anim','anim_update'},
       {'timed','tick'},
       {'view','update_view'}
-   ]])
+   ]], function(x, y)
+         return fget(mget(x, y), 0)
+      end)
+   -- g_view.x = _g.mike.x
+   -- g_view.y = _g.mike.y
 end
 
 function game_draw()
-   for i=1,100 do
-      rect(
-         rnd()*128, rnd()*128,
-         rnd()*128, rnd()*128,
-         1
-      )
-   end
-   scr_rectfill(-8,-4/8,8,16,3)
-
+   scr_map(0,0,0,0,64,64)
    acts_loop('drawable', 'd')
+
+   call_not_nil(_g.mike, 'd', _g.mike)
    if _g.debug then acts_loop('dim', 'debug_rect') end
 end
 
 function game_init()
    _g.mike = g_att.mike(0,0)
-   g_view = g_att.view(2.75, 3, 0, _g.mike)
+   g_cur_room = gun_vals[[x=0,y=0,w=64,h=64]]
+   g_view = g_att.view(16, 16, 1, _g.mike)
    g_view.off_y=5
-   sfx(2)
+   sfx(2,2)
 end

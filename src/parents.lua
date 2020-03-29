@@ -334,15 +334,15 @@ create_parent(
 [[ 'grounded', {'dim'}, {'keep_above_ground'},
    {
       keep_above_ground=@1,
-      is_touching_ground=@2
+      is_touching_ground=@2,
+      wall_below = false
    }
 ]], function(a)
    if a:is_touching_ground() then
-      a.y = -a.ry
       a.ay = 0
    end
 end, function(a)
-   return a.y >= -a.ry
+   return a.wall_below
 end)
 
 create_parent(
@@ -382,3 +382,18 @@ function(a,b) return a.btns[b] end,
 function(a) return btn_helper(a:btn(0), a:btn(1)) end,
 function(a) return btn_helper(a:btn(2), a:btn(3)) end
 )
+
+create_parent(
+[[ 'tcol', {'vec','dim'}, {},
+   {
+      tile_solid=true,
+      tile_hit=nf,
+      coll_tile=@1
+   }
+]], function(a, solid_func)
+   local x, dx = coll_tile_help(a.x, a.y, a.dx, a.rx, a.ry, 0, a, a.tile_hit, solid_func)
+   local y, dy = coll_tile_help(a.y, a.x, a.dy, a.ry, a.rx, 2, a, a.tile_hit, function(y, x) return solid_func(x, y) end)
+   if a.tile_solid then
+      a.x, a.y, a.dx, a.dy = x, y, dx, dy
+   end
+end)
