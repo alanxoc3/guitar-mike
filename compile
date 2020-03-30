@@ -11,6 +11,7 @@ src/misc.lua
 src/move_funcs.lua
 src/tbox.lua
 src/view.lua
+src/fractal.lua
 
 src/acts.lua
 src/parents.lua

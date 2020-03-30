@@ -3,17 +3,21 @@ create_actor([['mike', 2,
 ]], [[
    touchable=true,
    jump_percent = 0,
-   rx=.5,
+   rx=.375,
    ry=1,
    iyy=-8,
+   xf=true,
    x=@1, y=@2,
+   spawns={{x=@1,y=@2}},
    sind=192, sw=2, sh=4,
    jump_sinds={194,196,198,200},
-   play_sinds={128,130,132,134,136,138,140,142,140,138,136,134,132,130,128},
+   play_sinds    ={128,130,132,134,136,138,140,142},
+   play_end_sinds={140,142,138,136,134,132,130,128},
    tl_loop=true,
    tile_hit=@6,
-   {i=nf, u=@3},
-   {i=@5, u=@4, tl_max_time=3}
+   {i=nf, u=@3, e=nf},
+   {i=@5, u=@4, e=nf, tl_max_time=1.5},
+   {i=@8, u=@7, e=@9, tl_max_time=1.5}
 ]], function(a)
    if a:xbtn() > 0 then
       a.xf = false
@@ -31,11 +35,12 @@ create_actor([['mike', 2,
       a.dy -= a.jump_percent * 1.5
       a.ix = .85
       a.sind = 202
+      add(a.spawns, {x=a.x,y=a.y})
       sfx(4,3)
    else
       a.ix = .75
    end
-      a.ay += .005
+   a.ay += .005
 
    if a:is_touching_ground() and a:btn(4) then
       if a.jump_percent < 1 then sfx(5,3) end
@@ -66,11 +71,30 @@ create_actor([['mike', 2,
    a.wall_below = false
 end, function(a)
    local percent = a.tl_tim / a.tl_max_time
-   a.sind = a.play_sinds[1+flr(percent*14)]
+   a.sind = a.play_sinds[1+flr(percent*8)]
+   pal(1,sin(t())*15, 1)
 end, function(a)
+   _g.jam_count += 1
    music(1)
+   g_show_fractal = true
 end, function(a, dir)
-   a.wall_below = true
+   if dir == 3 then
+      a.wall_below = true
+   end
+end, function(a)
+   local percent = a.tl_tim / a.tl_max_time
+   a.sind = a.play_end_sinds[1+flr(percent*8)]
+   pal(1,sin(t())*15, 1)
+end, function(a)
+   local last_spawn = a.spawns[#a.spawns]
+   if #a.spawns > 1 then
+      del(a.spawns, last_spawn)
+   end
+   a.x = last_spawn.x
+   a.y = last_spawn.y
+end, function(a)
+   pal(1,1,1)
+   g_show_fractal = false
 end)
 
 create_actor([['view', 4,
@@ -99,13 +123,3 @@ end, function(a, ma)
    a.follow_act = ma
    a.tl_next = ma and ma.timeoutable and 2 or 1
 end)
-
-create_actor([['platform', 2, {'wall', 'drawable', 'spr'}
-]], [[
-   x=@1, y=@2, rx=.5, ry=.5, sind=1, sw=1, sh=2, iyy=-2
-]])
-
-create_actor([['long_platform', 2, {'wall', 'drawable', 'spr'}
-]], [[
-   x=@1, y=@2, rx=8, ry=.5, sind=32, sw=16, sh=2, iyy=-2
-]])

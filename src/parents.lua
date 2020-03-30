@@ -123,6 +123,7 @@ create_parent(
 ]], function(a)
    a.dx += a.ax a.dy += a.ay
    a.dx *= a.ix a.dy *= a.iy
+   if a.dy > 1 then a.dy = 1 end
    if a.ax == 0 and abs(a.dx) < .01 then a.dx = 0 end
    if a.ay == 0 and abs(a.dy) < .01 then a.dy = 0 end
 end, function(a)
