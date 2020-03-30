@@ -35,6 +35,7 @@ create_actor([['mike', 2,
       a.dy -= a.jump_percent * 1.5
       a.ix = .85
       a.sind = 202
+      _g.jump_count += 1
       add(a.spawns, {x=a.x,y=a.y})
       sfx(4,3)
    else

@@ -2,6 +2,7 @@ _g = gun_vals[[
    scr_fade=0,
    debug=false,
    jam_count=0,
+   jump_count=0,
    btns={}
 ]]
 
@@ -58,7 +59,7 @@ function game_draw()
    if g_show_fractal then
       fractal_draw()
    end
-   zprint("guitar mike", scr_x(35), scr_y(25), 0, 7, 1)
+   zprint("guitar mike", scr_x(35), scr_y(25), 0, 12, 1)
    zprint("z to jump!", scr_x(35), scr_y(26), 0, 7, 1)
    zprint("go mike!", scr_x(20), scr_y(25), 0, 7, 1)
    zprint("annoyed?", scr_x(6), scr_y(17), 0, 7, 1)
@@ -71,14 +72,16 @@ function game_draw()
    zprint("you win", scr_x(50), scr_y(20), 0, 8, 2)
    zprint(" *heh* ", scr_x(50), scr_y(21), 0, 8, 2)
 
-   zprint("ok, you def win this time,", scr_x(94), scr_y(23), 0, 7, 1)
-   zprint("because i'm too lazy to", scr_x(94), scr_y(24), 0, 7, 1)
-   zprint("finish this game.", scr_x(94), scr_y(25), 0, 7, 1)
+   zprint("ok, you def win this time,", scr_x(77), scr_y(20), 0, 7, 1)
+   zprint("because i'm too lazy to", scr_x(77), scr_y(21), 0, 7, 1)
+   zprint("finish this game.", scr_x(77), scr_y(22), 0, 7, 1)
+
+   zprint("you jumped ".._g.jump_count.." times!", scr_x(95), scr_y(25), 0, 14, 8)
+   zprint("you jammed ".._g.jam_count.." times!", scr_x(95), scr_y(26), 0, 15, 4)
 
    zprint("have a great day!", scr_x(111), scr_y(18), 0, 7, 1)
    zprint("keep social distancing!", scr_x(113), scr_y(19), 0, 11, 3)
    zprint("music is a weapon btw!", scr_x(114), scr_y(20), 0, 12, 1)
-   zprint("you jammed ".._g.jam_count.." times!", scr_x(111), scr_y(21), 0, 15, 4)
    zprint("@alanxoc3 - code/spr/sfx", scr_x(113), scr_y(22), 0, 8, 2)
    zprint("@cadensings - spr", scr_x(112), scr_y(23), 0, 10, 4)
    zprint("@shuyingyu0327 - photo", scr_x(113), scr_y(24), 0, 14, 2)
@@ -92,9 +95,8 @@ end
 
 function game_init()
    fractal_init()
-   -- _g.mike = g_att.mike(35,29)
-   _g.mike = g_att.mike(84,21)
-   g_cur_room = gun_vals[[x=0,y=0,w=128,h=32]]
+   _g.mike = g_att.mike(35,29)
+   g_cur_room = gun_vals[[x=0,y=0,w=125,h=32]]
    g_view = g_att.view(16, 16, 0, _g.mike)
    sfx(2,2)
 end
